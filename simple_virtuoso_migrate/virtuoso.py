@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from core.exceptions import MigrationException
 from git import Git
 from helpers import Utils
@@ -24,9 +26,8 @@ ISQL_SERVER = "select server_root();"
 class Virtuoso(object):
     """ Interact with Virtuoso Server"""
 
-    migration_graph = "http://example.com/"
-
     def __init__(self, config):
+        self.migration_graph = config.get("migration_graph")
         self.__virtuoso_host = config.get("database_host", '')
         self.__virtuoso_user = config.get("database_user")
         self.__virtuoso_passwd = config.get("database_password")
@@ -44,28 +45,6 @@ class Virtuoso(object):
         else:
             self._virtuoso_dir = self._run_isql(ISQL_SERVER)[0].split(
                                                                     '\n\n')[-2]
-
-    #def command_call(self, comando):
-    #    proc = subprocess.Popen(comando, shell=True, stdout=subprocess.PIPE,
-    #                            stderr=subprocess.PIPE)
-    #    stdout_value, stderr_value = proc.communicate()
-    #    return stdout_value, stderr_value
-#
-    #def connect(self):
-    #    """ Connect to virtuoso server """
-    #    # isql -U <user> -P <password> -H <hostname> -S <port> <
-    #    try:
-    #        conn = "isql -U %s -P %s -H %s -S %s < " % (self.__virtuoso_user,
-    #            self.__virtuoso_passwd,self.__virtuoso_host,
-    #                self.__virtuoso_port)
-    #        test = 'echo "status();"| ' + conn[:-2]
-    #        _, stderr_value = self.command_call(test)
-    #        if len(stderr_value) > 0:
-    #            raise Exception(stderr_value)
-    #        else:
-    #            return conn
-    #    except Exception as e:
-    #        raise Exception("could not connect to virtuoso: %s" % e)
 
     def _run_isql(self, cmd, archive=False):
         conn = ISQL % (self.__virtuoso_user,
@@ -352,10 +331,6 @@ ORDER BY desc(?data) LIMIT 1
             <%(m_graph)schanges> "%(query_up)s"; ?p ?o.};' % values
 
         return query_up, query_down
-
-    #def get_statements(self, input_file, current_version, origen="insert"):
-    #    return self.get_sparql(None, self.get_ontology_from_file(input_file),
-    #                            current_version, None, origen, input_file)
 
     def get_ontology_by_version(self, version):
         file_name = self._migrations_dir + "/" + self.__virtuoso_ontology
