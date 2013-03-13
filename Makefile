@@ -26,7 +26,6 @@ compile: clean
 	@python -tt -m compileall tests
 
 test: compile
-	@make clean
 	@echo "Starting tests..."
 	@nosetests -s --verbose --with-coverage --cover-erase --cover-package=simple_virtuoso_migrate tests
 	@make clean
