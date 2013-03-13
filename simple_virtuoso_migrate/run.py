@@ -66,22 +66,20 @@ def run(options):
 
         # Ask the password for user if configured
         if config.get('database_password') == '<<ask_me>>':
-            CLI.msg('\nPlease inform password to connect to\
-                virtuoso (DATABASE) "%s@%s"' % (config.get('database_user'),
+            CLI.msg('\nPlease inform password to connect to virtuoso (DATABASE) "%s@%s"' % (config.get('database_user'),
                                                 config.get('database_host')))
             passwd = getpass()
             config.update('database_password', passwd)
 
         is_local = config.get('database_host', '').lower() in ["localhost",
                                                                "127.0.0.1"]
-        #import pdb; pdb.set_trace()
         if config.get('load_ttl') and\
                 config.get('virtuoso_dirs_allowed') is None and\
                 not is_local:
             if config.get('host_password') == '<<ask_me>>':
-                CLI.msg('\nPlease inform password to connect to\
-                virtuoso (HOST) "%s@%s"' % (config.get('host_user'),
-                                            config.get('database_host')))
+                msg = '\nPlease inform password to connect to virtuoso (HOST) "%s@%s"'
+                CLI.msg(msg % (config.get('host_user'),
+                               config.get('database_host')))
                 passwd = getpass()
                 config.update('host_password', passwd)
         # If CLI was correctly parsed, execute db-virtuoso.
