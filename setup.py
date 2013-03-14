@@ -17,8 +17,8 @@ setup(
     install_requires=['GitPython>=0.3 ',
                       'paramiko==1.9.0',
                       'rdflib==3.2.1',
-                      'rdfextras==0.2',
-                      'rdflib-sparqlstore==0.1'],
+                      'rdfextras==0.4',
+                      'rdflib-sparqlstore==0.2'],
 
     # generate script automatically
     entry_points = {
