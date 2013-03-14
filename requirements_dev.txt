@@ -1,0 +1,8 @@
+coverage==3.5.1
+mock==0.8.0
+nose==1.1.2
+GitPython>=0.3
+paramiko==1.9.0
+rdflib==3.2.1
+rdfextras==0.4
+rdflib-sparqlstore==0.2
